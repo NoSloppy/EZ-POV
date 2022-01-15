@@ -34,7 +34,7 @@ Install g++ and netpbm
 - Click on the green "CODE" button on the main repo page https://github.com/NoSloppy/EZ-POV
 - Choose to "Download ZIP".
 - Once downloaded, highlight the .zip file, click "Extract" in pink in the window's top bar, then click "Extract All".
-- Click "Browse" and choose somewhere, like your Desktop. Then click "Next".
+- Click "Browse" and choose somewhere logical, like inside 'ProffieOS/pov_tools'. Then click "Next".
 - Inside EZ-POV-master is an EZ-POV folder. That is the working directory from here on out.
 
 ### Make POV files

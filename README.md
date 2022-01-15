@@ -35,17 +35,17 @@ Install g++ and netpbm
 
 ### Make POV files
 
-1. Get a .png image you want to convert and place it in the EZ-POV folder (you can try the Star Wars logo in the download).
+- Get a .png image you want to convert and place it in the EZ-POV folder (you can try the Star Wars logo in the download).
 There should be no spaces in your source filename.png. (Simple, single color images work best at the moment)
-2. Windows: Doubleclick create_POV_data_files-Win.bat  
+- Windows: Doubleclick create_POV_data_files-Win.bat  
     Mac: Doubleclick create_POV_data_files-Mac
-3. The source filename will be used to generate the output files.
-4. Check out resulting *preview.png, where *is your original filename. It should look windshieldwiper warped.
-5. Move the new *data.h file into ProffieOS/styles
+- The source filename will be used to generate the output files.
+- Check out resulting *preview.png, where *is your original filename. It should look windshieldwiper warped.
+- Move the new *data.h file into ProffieOS/styles
     - If you processed a Single Color file, use the resulting *SC_POV_data.h file.
     - If Full Color source file, then use *FC_POV-data.h file.
-6. Edit ProffieOS/styles/pov.h. Change the #include on line 16 to be your new filename. Save.
-7. Then you just use the style in a preset::
+- Edit ProffieOS/styles/pov.h. Change the #include on line 16 to be your new filename. Save.
+- Then you just use the style in a preset::
 ```
 { "Font", "tracks/track.wav",
    &style_pov, 

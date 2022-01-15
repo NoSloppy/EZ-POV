@@ -29,6 +29,7 @@ Install g++ and netpbm
 ### Linux
 - Install netpbm http://netpbm.sourceforge.net/
 
+---------------------------------------------------------------------------------------
 ### Download the whole EZ-POV folder.  
 - Click on the green "CODE" button on the main repo page https://github.com/NoSloppy/EZ-POV
 - Choose to "Download ZIP".

@@ -37,8 +37,8 @@ Install g++ and netpbm
 
 - Get a .png image you want to convert and place it in the EZ-POV folder (you can try the Star Wars logo in the download).
 There should be no spaces in your source filename.png. (Simple, single color images work best at the moment)
-- Windows: Doubleclick create_POV_data_files-Win.bat  
-    Mac: Doubleclick create_POV_data_files-Mac
+- Windows: Doubleclick "create_POV_data_files-Win.bat"  
+    Mac: Doubleclick "create_POV_data_files-Mac"
 - The source filename will be used to generate the output files.
 - Check out resulting *preview.png, where *is your original filename. It should look windshieldwiper warped.
 - Move the new *data.h file into ProffieOS/styles

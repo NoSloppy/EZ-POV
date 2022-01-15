@@ -1,1 +1,1 @@
-start powershell -noexit -command "bash create_POV_data_files-Mac"
+start powershell -noexit -command "bash create_POV_data_files"

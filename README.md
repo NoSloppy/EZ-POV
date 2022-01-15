@@ -2,7 +2,7 @@
 Make POV images for ProffieOS.  
 Uses ProffieOS POV Tools to create Point-Of-View Images that show when you swing the blade.
 
-### Windows Requirements (Windows 10 at time of writing):  
+### Windows (Windows 10 at time of writing):  
 
 Windows 10  
 Install Windows Subsystem for Linux  
@@ -22,10 +22,12 @@ Install g++ and netpbm
 - When that finishes, type "sudo apt install netpbm".
 - Answer the question with "y".
 
-### MacOS Requirements (should also work on Linux):
+### MacOS:
 - Install Homebrew https://treehouse.github.io/installation-guides/mac/homebrew
 - Install netpbm (In Terminal, type "brew install netpbm").  
 
+### Linux
+- Install netpbm http://netpbm.sourceforge.net/
 
 ### Download the whole EZ-POV folder.  
 - Click on the green "CODE" button on the main repo page https://github.com/NoSloppy/EZ-POV

@@ -39,18 +39,22 @@ Install g++ and netpbm
 
 ### Make POV files
 
-- Get a .png image you want to convert and place it in the EZ-POV folder (you can try the Star Wars logo in the download).
-There should be no spaces in your source filename.png. (Simple, single color images work best at the moment)
-*NOTE* Each time you make a new POV image, you must first clear out any existing .png files from the EZ-POV folder.
+- Put the .png image you want to convert into the EZ-POV folder. (Simple, single color images work best at the moment)  
+There should be no spaces in your source filename.png. (you can try the sample Star_Wars_Logo.png in the download).  
+*NOTE* **- Each time you make a new POV image, you must first clear out any existing .png files from the EZ-POV folder.** 
 - Windows: Doubleclick "create_POV_data_files-Win.bat"  
     (If Microsoft Defender pops up a warning, click "More Info" then "Run anyway")  
     Mac or Linux: Doubleclick "create_POV_data_files"
-- The source filename will be used to generate the output files.
-- Check out resulting *preview.png, where *is your original filename. It should look windshieldwiper warped.
-- Move the new *data.h file into ProffieOS/styles
-    - If you processed a Single Color file, use the resulting *SC_POV_data.h file.
-    - If Full Color source file, then use *FC_POV-data.h file.
-- Edit ProffieOS/styles/pov.h. Change the #include on line 16 to be your new filename. Save.
+- Check the resulting *preview.png, where * is your original filename. It should look windshieldwiper warped.
+- The required data files *_POV_data.h have been written to the ProffieOS/styles folder.
+- Add the following lines to your config file, the same way a prop file is setup: (Example filename is used here)
+```
+#ifdef CONFIG_POV
+#include "../styles/Star_Wars_Logo_SC_POV_data.h"
+#endif
+```
+- If you processed a Single Color source file, use the resulting *_SC_POV_data.h file.
+- If you processed a Full Color source file, then use the resulting *_FC_POV_data.h file.
 - Then you just use the style in a preset::
 ```
 { "Font", "tracks/track.wav",
@@ -58,5 +62,7 @@ There should be no spaces in your source filename.png. (Simple, single color ima
   "my_pov"},
   ```
 
+Swing the blade in a steady movement to see the image in the air. A long-exposure capture showcases the result best.
+Enjoy!  (⌐■_■)
 
 

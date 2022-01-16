@@ -3,11 +3,11 @@ ALL: image.h image_pgm.h preview.png
 
 # Full-Color images
 image.h: pnmtorle pnmwindshieldwiper *.png
-	pngtopnm $(basename $(OUTPUT)).png | ./pnmwindshieldwiper | pnmscale -height 144 | ./pnmtorle > ../styles/$(basename $(OUTPUT))_FC_POV_data.h
+	pngtopnm $(basename $(OUTPUT)).png | ./pnmwindshieldwiper | pnmscale -height 144 | ./pnmtorle > ../../styles/$(basename $(OUTPUT))_FC_POV_data.h
 
 #Single-Color images
 image_pgm.h: pgmtorle pnmwindshieldwiper *.png
-	pngtopnm $(basename $(OUTPUT)).png | ./pnmwindshieldwiper | pnmscale -height 144 | ./pgmtorle > ../styles/$(basename $(OUTPUT))_SC_POV_data.h
+	pngtopnm $(basename $(OUTPUT)).png | ./pnmwindshieldwiper | pnmscale -height 144 | ./pgmtorle > ../../styles/$(basename $(OUTPUT))_SC_POV_data.h
 
 preview.png: pnmwindshieldwiper *.png
 	pngtopnm $(basename $(OUTPUT)).png | ./pnmwindshieldwiper | pnmscale -height 144 | pnmtopng > $(basename $(OUTPUT))_preview.png

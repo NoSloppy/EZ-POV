@@ -1,10 +1,13 @@
-# EZ-POV
-Make POV images for ProffieOS.  
-Uses ProffieOS POV Tools to create Point-Of-View Images that show when you swing the blade.
+# EZ-POV 
+Uses ProffieOS POV Tools to create Point-Of-View images that show when you swing the blade.  
+Under the hood:  
+pnmtorle - Converts a full-color image to hex data to be included in the code.  
+pgmtorle - Converts a single-color image to hex data to be included in the code.  
+pnmwindshieldwiper - Scales the image and bends it so that it will work on a swinging blade.  
 
+### Operating System Requirements:  
 ### Windows (Windows 10 at time of writing):  
 
-Windows 10  
 Install Windows Subsystem for Linux  
 - Get Ubuntu App in the Microsoft Store. (required for “bash” and other commands). Download but don't choose open once it finishes installing. 
 https://www.microsoft.com/en-us/p/ubuntu/9nblggh4msv6?activetab=pivot:overviewtab
@@ -34,7 +37,7 @@ Install g++ and netpbm
 - Click on the green "CODE" button on the main repo page https://github.com/NoSloppy/EZ-POV
 - Choose to "Download ZIP".
 - Once downloaded, highlight the .zip file, click "Extract" in pink in the window's top bar, then click "Extract All".
-- Click "Browse" and choose somewhere logical, like inside 'ProffieOS/pov_tools'. Then click "Next".
+- Click "Browse" and navigate to the 'ProffieOS/pov_tools' folder. Then click "Next".
 - Inside EZ-POV-master is an EZ-POV folder. That is the working directory from here on out.
 
 ### Make POV files

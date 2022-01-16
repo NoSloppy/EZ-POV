@@ -40,7 +40,10 @@ Install g++ and netpbm
 ### Make POV files
 
 - Put the .png image you want to convert into the EZ-POV folder. (Simple, single color images work best at the moment)  
-There should be no spaces in your source filename.png. (you can try the sample Star_Wars_Logo.png in the download).  
+There should be no spaces in your source filename.png.  
+For an example, you can right-click and Save the sample Star Wars logo .png here:  
+https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Star_Wars_Logo.svg/1024px-Star_Wars_Logo.svg.png  
+
 *NOTE* **- Each time you make a new POV image, you must first clear out any existing .png files from the EZ-POV folder.** 
 - Windows: Doubleclick "create_POV_data_files-Win.bat"  
     (If Microsoft Defender pops up a warning, click "More Info" then "Run anyway")  
@@ -50,7 +53,7 @@ There should be no spaces in your source filename.png. (you can try the sample S
 - Add the following lines to your config file, the same way a prop file is setup: (Example filename is used here)
 ```
 #ifdef CONFIG_POV
-#include "../styles/Star_Wars_Logo_SC_POV_data.h"
+#include "../styles/1024px-Star_Wars_Logo.svg_SC_POV_data.h"
 #endif
 ```
 - If you processed a Single Color source file, use the resulting *_SC_POV_data.h file.

@@ -55,7 +55,7 @@ There should be no spaces in your source filename.png. (you can try the sample S
 ```
 - If you processed a Single Color source file, use the resulting *_SC_POV_data.h file.
 - If you processed a Full Color source file, then use the resulting *_FC_POV_data.h file.
-- Then you just use the style in a preset::
+- Then you just use the POV blade style in a preset::
 ```
 { "Font", "tracks/track.wav",
    &style_pov, 

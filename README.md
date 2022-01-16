@@ -48,9 +48,10 @@ For an example, you can right-click and Save the sample Star Wars logo .png here
 https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Star_Wars_Logo.svg/1024px-Star_Wars_Logo.svg.png  
 
 *NOTE* **- Each time you make a new POV image, you must first clear out any existing .png files from the EZ-POV folder.** 
-- Windows: Doubleclick "create_POV_data_files-Win.bat"  
+- Windows: Double click "create_POV_data_files-Win.bat"  
     (If Microsoft Defender pops up a warning, click "More Info" then "Run anyway")  
-    Mac or Linux: Doubleclick "create_POV_data_files"
+    Mac or Linux: Double click "create_POV_data_files"  
+    Optionally, you can use command line tools of course. 'cd' to the 'pov_tools' directory and type 'make'.
 - Check the resulting *preview.png, where * is your original filename. It should look windshieldwiper warped.
 - The required data files *_POV_data.h have been written to the ProffieOS/styles folder.
 - Add the following lines to your config file, the same way a prop file is setup: (Example filename is used here)

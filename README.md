@@ -1,9 +1,10 @@
-# EZ-POV 
-Uses ProffieOS POV Tools to create Point-Of-View images that show when you swing the blade.  
+# create_POV_data_files (script)
+Use ProffieOS POV Tools to create Point-Of-View images that show when you swing the blade.  
 Under the hood:  
 pnmtorle - Converts a full-color image to hex data to be included in the code.  
 pgmtorle - Converts a single-color image to hex data to be included in the code.  
 pnmwindshieldwiper - Scales the image and bends it so that it will work on a swinging blade.  
+pnmquantizedtorle - Quantizes images to 8bit 256 colors to balance using color images and not taking up too much memory.  
 
 ### Operating System Requirements:  
 ### Windows (Windows 10 at time of writing):  
@@ -33,35 +34,32 @@ Install g++ and netpbm
 - Install netpbm http://netpbm.sourceforge.net/
 
 ---------------------------------------------------------------------------------------
-### Download the whole EZ-POV folder.  
-- Click on the green "CODE" button on the main repo page https://github.com/NoSloppy/EZ-POV
-- Choose to "Download ZIP".
-- Once downloaded, highlight the .zip file, click "Extract" in pink in the window's top bar, then click "Extract All".
-- Click "Browse" and navigate to the 'ProffieOS/pov_tools' folder. Then click "Next".
-- Inside EZ-POV-master is an EZ-POV folder. That is the working directory from here on out.
 
 ### Make POV files
 
-- Put the .png image you want to convert into the EZ-POV folder. (Simple, single color images work best at the moment)  
-There should be no spaces in your source filename.png.  
-For an example, you can right-click and Save the sample Star Wars logo .png here:  
-https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Star_Wars_Logo.svg/1024px-Star_Wars_Logo.svg.png  
+- Put a .png image you want to convert into the pov_tools folder.  
+If there are any spaces in your filenames, the script will change them to underscores for you before processing.
+If you have no images but want to try the sample Star Wars logo .png, run the script anyway and it will download and process it for you :)  
+Each time you make a new POV image, you must first clear out any existing .png files from the pov_tools folder.  
+The script will present a delete option for the previous preview.png and data files. 
 
-*NOTE* **- Each time you make a new POV image, you must first clear out any existing .png files from the EZ-POV folder.** 
-- Windows: Double click "create_POV_data_files-Win.bat"  
+- Windows: Doubleclick "create_POV_data_files-Win.bat"  
     (If Microsoft Defender pops up a warning, click "More Info" then "Run anyway")  
-    Mac or Linux: Double click "create_POV_data_files"  
-    Optionally, you can use command line tools of course. 'cd' to the 'pov_tools' directory and type 'make'.
-- Check the resulting *preview.png, where * is your original filename. It should look windshieldwiper warped.
-- The required data files *_POV_data.h have been written to the ProffieOS/styles folder.
-- Add the following lines to your config file, the same way a prop file is setup: (Example filename is used here)
-```
-#ifdef CONFIG_POV
-#include "../styles/1024px-Star_Wars_Logo.svg_SC_POV_data.h"
-#endif
-```
-- If you processed a Single Color source file, use the resulting *_SC_POV_data.h file.
-- If you processed a Full Color source file, then use the resulting *_FC_POV_data.h file.
+    Mac or Linux: Doubleclick "create_POV_data_files"  
+    
+- Type the name of your image (including the .png extension)  
+- Choose a sizing option from the list. 3 preset sizes plus Height entry only and Custom size are the options.  
+(Height should probably be the blade length)
+- Check the resulting preview.png in the pov_tools folder. It should look windshieldwiper warped.
+- The image data files are written directly to the ProffieOS/styles folder.
+- To use the POV data file for a blade style, first tell the OS which one  
+with the following line added to your config file in the CONFIG_TOP section:  
+`#define POV_INCLUDE_FILE "dataFileNameHere.h"`
+
+- If you used a Single Color source file, use the resulting image_pgm.h file.  
+If you used a Full Color source file, then use the resulting image.h file.  
+If you used a Full Color source file, memory use might be less choosiing the image_8bit.h file.  
+
 - Then you just use the POV blade style in a preset::
 ```
 { "Font", "tracks/track.wav",
@@ -71,5 +69,3 @@ https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Star_Wars_Logo.svg/102
 
 Swing the blade in a steady movement to see the image in the air. A long-exposure capture showcases the result best.
 Enjoy!  (⌐■_■)
-
-

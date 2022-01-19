@@ -116,7 +116,7 @@ do
 	read -p "How many pixels are in your blade? (min 5, ENTER for default 144) " height
 	if [[ $height == "" ]]; then height=144 length=36 offset=18 validinput=1
 	elif [[ $height == "q" ]]; then exit
-    elif [[ $height -lt 5 ]]; then 
+	elif [[ $height -lt 5 ]]; then
 		echo "! Minimum length is 5, try again"
 	elif [[ $height -gt 300 ]] && [[ $height -le 576 ]]; then
 		echo "Are you sure there's that many pixels?? (y/n)"
@@ -138,7 +138,7 @@ if [ $height_only != 1 ]; then
 		read -p "How long is your blade? (min 5, ENTER for default ($ calc_len goes here) " length
 		if [[ $length == "" ]]; then length=$calc_len validinput=1
 		elif [[ $length == "q" ]]; then exit
-	    elif [[ $length -lt 5 ]]; then 
+		elif [[ $length -lt 5 ]]; then 
 			echo "! Minimum length is 5, try again"; echo ""
 		elif [[ $length -gt 60 ]]; then
 			echo "Are you sure your blade is that long?? (y/n) "
@@ -157,10 +157,9 @@ if [ $height_only != 1 ]; then
 	do
 		echo "How long is your arm?"
 		read -p "(hand to pivot point: shoulder/elbow/wrist) (min 5, ENTER for default 18) " offset
-
 		if [[ $offset == "" ]]; then  offset=18 validinput=1
 		elif [[ $offset == "q" ]]; then exit
- 	    elif [[ $offset -lt 5 ]]; then 
+		elif [[ $offset -lt 5 ]]; then 
 			echo "! Minimum offset is 5, try again"; echo ""
 		elif [[ $offset -gt 40 ]]; then
 			echo "Are you sure your arm is that long?? (y/n) "
@@ -177,4 +176,3 @@ else # height_only
 	length=36 offset=18
 fi
 make IMAGE=$image OPTIONS="--height=$height  --length=$length --offset=$offset" HEIGHT=$height
-

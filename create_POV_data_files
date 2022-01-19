@@ -1,0 +1,191 @@
+#!/bin/bash
+
+# create_POV_data_files
+
+cd "$(dirname "$0")"
+clear
+echo ""; echo "Welcome! Let's make some POV images!"; echo ""
+# replace whitespace in source filename with underscores
+find . -type f -name "* *" | while read file; do mv "$file" ${file// /_}; done
+have_logo=0
+height_only=0
+# get quantity of .png files and build array to print if multiples
+files=$(ls 2>/dev/null -Ubad1 -- *.png | wc -l)
+pngs=$(find . -type f -name '*.png')
+
+if [ "$files" -ge 2 ]; then
+	echo "OOPS! Too many .png image files found!"
+	echo ""
+	for strip in ${pngs[@]}; do
+		basename="${strip##*/}"
+		echo "${basename[*]}"
+	done
+	echo ""
+	echo "There needs to be only ONE source .png image in the pov_tools folder."
+	echo ""
+	echo "Press 'r' - to remove ALL FILES with 'preview' in the name. "
+	echo "    If the additional filenames do not contain 'preview',"
+	echo "    manually delete all files except your source image."
+	echo ""
+	echo "Press q to quit."
+	read -n 1 -r -s -p $'Press any other key to start over.\n' fix
+	case $fix in
+		r) make clean;
+			echo ""
+			echo "Files containing *preview* deleted if they existed"
+			read -n 1 -r -s -p $'Press any key to continue.\n'
+			exec "./create_POV_data_files";;
+		q) exit;;
+		*) exec "./create_POV_data_files";;
+	esac
+fi
+
+if [ "$files" -lt 1 ]; then
+	echo "OOPS! No .png image files found!"
+	echo ""
+	echo "Let's download an example Star Wars Logo for you to try :)"
+	echo "DOWNLOADING: 1024px-Star_Wars_Logo.svg.png .........."
+	echo ""
+	echo ""
+	wget https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Star_Wars_Logo.svg/1024px-Star_Wars_Logo.svg.png&>/dev/null &
+	logo=$"1024px-Star_Wars_Logo.svg.png"
+	have_logo=1
+	echo "Press q to quit, or"
+	read -n 1 -r -s -p $'press any other key to continue...\n' delay
+	if [ "$delay" = "q" ]; then exit; fi
+fi
+
+echo ""
+case $have_logo in
+	1) echo "Found the following source image file: $logo"
+		echo ""
+		image="$logo";;
+	0)  source=$(find . -type f -name '*.png')
+		for strip in ${source[@]}; do
+			sourcebase="${strip##*/}"
+		done
+		echo "Found the following source image file: ${sourcebase[*]}"
+		echo ""
+		# check for multiples and for filename contains 'preview'
+		recheck=$(ls 2>/dev/null -Ubad1 -- *.png | wc -l)
+		if [[ $sourcebase == *"preview"* ]]; then
+			echo "OOPS! Source file name can not contain 'preview'."
+			echo "Please use a different file name."
+			echo "Press q to quit, or"
+			read -n 1 -r -s -p $'press any key to try again.\n' retry
+			if [ "$retry" = "q" ]; then exit; fi
+			exec "./create_POV_data_files"
+		elif [ $recheck -ge 2 ]; then
+			exec "./create_POV_data_files"
+		fi
+		image="$sourcebase";;
+esac
+# -------- having to type name out and not re-checked
+# case $have_logo in
+# 	1) echo "Found the following source image file: $logo"
+#		echo ""
+# 		image="$logo";;
+# 	0) read -p "What is the source file name? (including.png) " image 
+# 		if [ "$image" == "" ]; then
+#			read -n 1 -r -s -p $'Some option is needed. Press any key to try again.\n'
+# 			exec "./create_POV_data_files"
+# 		fi
+# 		check=$(find . -type f -name "$image" | wc -l)
+# 		if [ "$check" -lt 1 ]; then
+# 			echo "OOPS! That file does not exist in the pov_tools folder."
+#			echo "Press q to quit, or"
+#			read -n 1 -r -s -p $'press any other key to try again.\n' redo
+#			if [ "$redo" = "q" ]; then exit; fi
+#			exec "./create_POV_data_files"
+# 		fi;;
+# esac
+
+valid_option=0
+
+while [ "$valid_option" != "1" ]
+do
+	echo "Please select the settings you want to create the POV image with: "
+	echo "1 - Preset 1 (HEIGHT=144, LENGTH=36, OFFSET=18) default"
+	echo "2 - Preset 2 (HEIGHT=97,  LENGTH=63, OFFSET=50)"
+	echo "3 - Preset 3 (HEIGHT=72,  LENGTH=50, OFFSET=15)"
+	echo "4 - Height entry only"
+	echo "5 - custom options"
+	echo "q - to quit"
+	read -n 1 -r -s -p $"" option
+	case $option in
+		"")	echo "! Some option is needed. Please try again";	echo "";;
+		1)	make IMAGE=$image OPTIONS="--height=144 --length=36 --offset=18" HEIGHT=144; exit;;
+		2)	make IMAGE=$image OPTIONS="--height=97 --length=63 --offset=50" HEIGHT=97; exit;;
+		3)	make IMAGE=$image OPTIONS="--height=72 --length=50 --offset=15" HEIGHT=72; exit;;
+		4)	height_only=1; valid_option=1;;
+		5)	valid_option=1;;
+#		6)
+#		7) ------ ADDITIONAL USER PRESETS CAN BE ADDED HERE -------
+#		8)		 or move 4 & 5 down to keep them all together
+		*[q*]*)	exit;;
+		*)	echo ""; echo "! Not a valid option, Please try again,"; echo "or type q to quit. "; echo "";;
+	esac
+done
+
+validinput=0
+
+while [ "$validinput" != "1" ]
+do
+	echo ""
+	read -p "How many pixels are in your blade? (min 5, ENTER for default 144) " height
+	case $height in
+        "") height=144 length=36 offset=18 validinput=1;;
+		*[q*]*) exit;;
+        *) 	if [[ $height -lt 5 ]]; then 
+				echo "! Minimum length is 5, try again"; echo ""
+			elif [[ $height =~ ^[0-9]{1,3}$ ]]; then validinput=1
+				# do some math here with $height to calculate length and give it to calc_len
+			else
+				echo "! That is not a valid number or d."
+				echo "  Please try again or type 'q' to quit."
+				echo ""
+			fi;;
+    esac
+done
+
+if [ $height_only != 1 ]; then
+	validinput=0
+	while [ "$validinput" != "1" ]
+	do
+		read -p "How long is your blade? (min 5, ENTER for default $calc_len) " length
+		case $length in
+			"") length=$calc_len validinput=1;;
+			*[q*]*) exit;;
+	        *) 	if [[ $length -lt 5 ]]; then 
+				echo "! Minimum length is 5, try again"; echo "" 	
+				elif [[ $length =~ ^[0-9]{1,3}$ ]]; then validinput=1
+				else
+					echo "! That is not a valid number or d."
+					echo "  Please try again or type 'q' to quit."
+					echo ""
+				fi;;
+	    esac
+	done
+
+	validinput=0
+	while [ "$validinput" != "1" ]
+	do
+		echo "How long is your arm?"
+		read -p "(hand to pivot point: shoulder/elbow/wrist) (min 5, ENTER for default 18) " offset
+		case $offset in
+			"") offset=18 validinput=1;;
+			*[q*]*) exit;;
+ 	        *) 	if [[ $offset -lt 5 ]]; then 
+				echo "! Minimum offset is 5, try again"; echo ""
+				elif [[ $offset =~ ^[0-9]{1,3}$ ]]; then validinput=1
+				else
+					echo "! That is not a valid number or d."
+					echo "  Please try again or type 'q' to quit."
+					echo ""
+				fi;;
+	    esac
+	done
+else # height_only
+	length=36 offset=18
+fi
+make IMAGE=$image OPTIONS="--height=$height  --length=$length --offset=$offset" HEIGHT=$height

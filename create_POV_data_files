@@ -113,11 +113,12 @@ validinput=0
 while [ "$validinput" != "1" ]
 do
 	echo ""
-	read -p "How many pixels are in your blade? (min 5, ENTER for default 144) " height
+	read -p "How many pixels are in your blade? (min 30, ENTER for default 144) " height
+	calc_len=(float) $height * (100.0 / 2.54) / 144.0
 	if [[ $height == "" ]]; then height=144 length=36 offset=18 validinput=1
 	elif [[ $height == "q" ]]; then exit
 	elif [[ $height -lt 5 ]]; then
-		echo "! Minimum length is 5, try again"
+		echo "! Minimum amount of pixels is 30, try again"
 	elif [[ $height -gt 300 ]] && [[ $height -le 576 ]]; then
 		echo "Are you sure there's that many pixels?? (y/n)"
 		read -n 1 -r -s -p "" too_many
@@ -127,7 +128,6 @@ do
 		echo "  Please try again or type 'q' to quit."
 		echo ""
 	elif [[ $height =~ ^[0-9]{1,3}$ ]]; then validinput=1
-		# do some math here with $height to calculate length and give it to calc_len
 	fi
 done
 
@@ -135,7 +135,7 @@ if [ $height_only != 1 ]; then
 	validinput=0
 	while [ "$validinput" != "1" ]
 	do
-		read -p "How long is your blade? (min 5, ENTER for default ($ calc_len goes here) " length
+		read -p "How long is your blade? (min 5, ENTER for default $calc_len) " length
 		if [[ $length == "" ]]; then length=$calc_len validinput=1
 		elif [[ $length == "q" ]]; then exit
 		elif [[ $length -lt 5 ]]; then 

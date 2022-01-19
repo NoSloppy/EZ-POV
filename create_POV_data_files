@@ -80,25 +80,6 @@ case $have_logo in
 		fi
 		image="$sourcebase";;
 esac
-# -------- having to type name out and not re-checked
-# case $have_logo in
-# 	1) echo "Found the following source image file: $logo"
-#		echo ""
-# 		image="$logo";;
-# 	0) read -p "What is the source file name? (including.png) " image 
-# 		if [ "$image" == "" ]; then
-#			read -n 1 -r -s -p $'Some option is needed. Press any key to try again.\n'
-# 			exec "./create_POV_data_files"
-# 		fi
-# 		check=$(find . -type f -name "$image" | wc -l)
-# 		if [ "$check" -lt 1 ]; then
-# 			echo "OOPS! That file does not exist in the pov_tools folder."
-#			echo "Press q to quit, or"
-#			read -n 1 -r -s -p $'press any other key to try again.\n' redo
-#			if [ "$redo" = "q" ]; then exit; fi
-#			exec "./create_POV_data_files"
-# 		fi;;
-# esac
 
 valid_option=0
 
@@ -128,7 +109,6 @@ do
 done
 
 validinput=0
-
 while [ "$validinput" != "1" ]
 do
 	echo ""
@@ -137,7 +117,11 @@ do
         "") height=144 length=36 offset=18 validinput=1;;
 		*[q*]*) exit;;
         *) 	if [[ $height -lt 5 ]]; then 
-				echo "! Minimum length is 5, try again"; echo ""
+				echo "! Minimum length is 5, try again";
+			elif [[ $height -gt 300 ]]; then
+				echo "Are you sure there's that many pixels?? (y/n)"
+				read -n 1 -r -s -p "" too_many
+				if [[ $too_many == "y" ]]; then validinput=1; else echo ""; fi
 			elif [[ $height =~ ^[0-9]{1,3}$ ]]; then validinput=1
 				# do some math here with $height to calculate length and give it to calc_len
 			else
@@ -157,7 +141,11 @@ if [ $height_only != 1 ]; then
 			"") length=$calc_len validinput=1;;
 			*[q*]*) exit;;
 	        *) 	if [[ $length -lt 5 ]]; then 
-				echo "! Minimum length is 5, try again"; echo "" 	
+					echo "! Minimum length is 5, try again"; echo ""
+				elif [[ $length -gt 60 ]]; then
+					echo "Are you sure your blade is that long?? (y/n) "
+					read -n 1 -r -s -p "" too_long
+					if [[ $too_long == "y" ]]; then validinput=1; else echo ""; fi	
 				elif [[ $length =~ ^[0-9]{1,3}$ ]]; then validinput=1
 				else
 					echo "! That is not a valid number or d."
@@ -177,6 +165,10 @@ if [ $height_only != 1 ]; then
 			*[q*]*) exit;;
  	        *) 	if [[ $offset -lt 5 ]]; then 
 				echo "! Minimum offset is 5, try again"; echo ""
+				elif [[ $offset -gt 60 ]]; then
+					echo "Are you sure your arm is that long?? (y/n) "
+					read -n 1 -r -s -p "" long_arm
+					if [[ $long_arm == "y" ]]; then validinput=1; else echo ""; fi	
 				elif [[ $offset =~ ^[0-9]{1,3}$ ]]; then validinput=1
 				else
 					echo "! That is not a valid number or d."

@@ -152,7 +152,8 @@ if [ $height_only != 1 ]; then
 	validinput=0
 	while [[ "$validinput" != 1 ]] && [[ $preset == 0 ]]
 	do
-		read -p "How many "$units" is your blade? (Press ENTER for calculated default $calc_len) " length
+		echo "How many "$units" is your blade? (Press ENTER for calculated default $calc_len) "
+		read length
 		if [[ $units == "inches" ]]; then max=48; else max=122; fi
 		if [[ $length == "" ]]; then length=$calc_len validinput=1
 		elif [[ $length == "q" ]]; then exit
@@ -171,7 +172,8 @@ if [ $height_only != 1 ]; then
 	while [[ "$validinput" != 1 ]] && [[ $preset == 0 ]]
 	do
 		echo "How many "$units" is your arm?"
-		read -p "(hand to pivot point: shoulder/elbow/wrist) (Press ENTER for calculated default $offset_default) " offset
+		echo "(hand to pivot point: shoulder/elbow/wrist) (Press ENTER for calculated default $offset_default) "
+		read offset
 		if [[ $units == "inches" ]]; then max=30; else max=76; fi
 		if [[ $offset == "" ]]; then  offset=$offset_default validinput=1
 		elif [[ $offset == "q" ]]; then exit

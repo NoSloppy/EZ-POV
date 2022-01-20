@@ -188,14 +188,20 @@ else # height_only
 fi
 
 if [ $preset == 0 ]; then make IMAGE=$image OPTIONS="--height=$height  --length=$length --offset=$offset"; HEIGHT=$height; fi
-echo ""
 mv ./preview.png ./"${sourcebase}"_"${HEIGHT}"_preview.png
-echo "Full color image is named  : "$sourcebase"_"$HEIGHT"_FC_POV_data.h"
 mv ./image.h ../styles/"${sourcebase}"_"${HEIGHT}"_FC_POV_data.h
-echo "Full color image is named  : "$sourcebase"_"$HEIGHT"_FC_POV_data.h"
 mv ./image_pgm.h ../styles/"${sourcebase}"_"${HEIGHT}"_SC_POV_data.h
-echo "Single color image is named: "$sourcebase"_"$HEIGHT"_SC_POV_data.h"
 mv ./image_8bit.h ../styles/"${sourcebase}"_"${HEIGHT}"_8b_POV_data.h
-echo "256 color image is named   : "$sourcebase"_"$HEIGHT"_8b_POV_data.h"
-echo "Data files moved to ProffieOS/styles folder."
+echo ""
+echo ""
+echo "Conversion DONE! Find your files as shown below."
+echo ""
+echo "preview image:"
+echo "	ProffieOS/pov_tools/"$sourcebase"_"$HEIGHT"_preview.png"
+echo "Full color image data file:"
+echo "	ProffieOS/styles/"$sourcebase"_"$HEIGHT"_FC_POV_data.h"
+echo "Single color image data file:"
+echo "	ProffieOS/styles/"$sourcebase"_"$HEIGHT"_SC_POV_data.h"
+echo "256 color image data file:"
+echo "	ProffieOS/styles/"$sourcebase"_"$HEIGHT"_8b_POV_data.h"
 exit

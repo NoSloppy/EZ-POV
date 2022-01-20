@@ -24,12 +24,12 @@ if [ "$files" -ge 2 ]; then
 	echo ""
 	echo "There needs to be only ONE source .png image in the pov_tools folder."
 	echo ""
-	echo "Press 'r' - to remove ALL FILES with 'preview' in the name. "
+	echo "Type 'r' - to remove ALL FILES with 'preview' in the name. "
 	echo "    If the additional filenames do not contain 'preview',"
 	echo "    manually delete all files except your source image."
 	echo ""
-	echo "Press q to quit."
-	read -n 1 -r -s -p $'Press any other key to start over.\n' fix
+	echo "Type q to quit."
+	read -p $'Press ENTER to start over.\n' fix
 	case $fix in
 		r) rm *preview*.png;
 			echo ""
@@ -94,7 +94,7 @@ do
 	echo "4 - Height entry only"
 	echo "5 - Custom options"
 	echo "q - to quit"
-	read -n 1 -r -s -p $"" option
+	read -p "" option
 	case $option in
 		"")	echo "! Some option is needed. Please try again"; echo "";;
 		1)	make IMAGE=$image OPTIONS="--height=144 --length=36 --offset=18"; HEIGHT=144 preset=1 valid_option=1;;
@@ -117,11 +117,12 @@ validinput=0
 while [[ "$validinput" != 1 ]] && [[ $preset == 0 ]]
 do
 	echo ""
-	read -p "How many pixels are in your blade? (Press ENTER for default 144) " height
+	echo "How many pixels are in your blade? (Press ENTER for default 144) "
+	read  height
 	if [[ $height == "" ]]; then height=144 length=36 offset=18 validinput=1; echo "Default 144"
 	elif [[ $height == "q" ]]; then exit
 	elif [[ $height -gt 264 ]] && [[ $height -le 576 ]]; then
-		read -n 1 -r -s -p "Are you sure there's that many pixels?? (y/n)" too_many
+		read -p "Are you sure there's that many pixels?? (y/n)" too_many
 		if [[ $too_many == "y" ]]; then validinput=1; else echo ""; fi
 	elif [[ $height -gt 576 ]]; then
 		echo "! That is likely impossible."
@@ -135,7 +136,8 @@ if [ $height_only != 1 ]; then
 	while [[ "$validinput" != 1 ]] && [[ $preset == 0 ]]
 	do
         echo ""
-        read -n 1 -r -s -p "What is your preferred unit of measuring distance? (i - inches, c - cm) " pref
+        echo "What is your preferred unit of measuring distance? (i - inches, c - cm) "
+        read pref
         case $pref in
             "") echo "! Some option is needed. Please try again"; echo "";;
             i)  calc_len=$(printf %.0f "$((10**3 * $height * 100 / 144 * 100 / 254))e-3"); offset_default=18; validinput=1; units="inches"; echo "inches";;
@@ -150,12 +152,12 @@ if [ $height_only != 1 ]; then
 	validinput=0
 	while [[ "$validinput" != 1 ]] && [[ $preset == 0 ]]
 	do
-		read -p "How many "$units" long is your blade? (Press ENTER for calculated default $calc_len) " length
+		read -p "How many "$units" is your blade? (Press ENTER for calculated default $calc_len) " length
+		if [[ $units == "inches" ]]; then max=48; else max=122; fi
 		if [[ $length == "" ]]; then length=$calc_len validinput=1
 		elif [[ $length == "q" ]]; then exit
-		elif [[ $units == "inches" ]]; then max=48 else max=122
 		elif [[ $length -gt $max ]]; then
-			read -n 1 -r -s -p  "Are you sure your blade is that long?? (y/n) " too_long
+			read -p "Are you sure your blade is that long?? (y/n) " too_long
 			if [[ $too_long == "y" ]]; then validinput=1; else echo ""; fi	
 		elif [[ $length =~ ^[0-9]{1,3}$ ]]; then validinput=1
 		else
@@ -168,13 +170,13 @@ if [ $height_only != 1 ]; then
 	validinput=0
 	while [[ "$validinput" != 1 ]] && [[ $preset == 0 ]]
 	do
-		echo "How many "$units" long is your arm?"
+		echo "How many "$units" is your arm?"
 		read -p "(hand to pivot point: shoulder/elbow/wrist) (Press ENTER for calculated default $offset_default) " offset
+		if [[ $units == "inches" ]]; then max=30; else max=76; fi
 		if [[ $offset == "" ]]; then  offset=$offset_default validinput=1
 		elif [[ $offset == "q" ]]; then exit
-		elif [[ $offset == "inches" ]]; then max=30 else max=76
 		elif [[ $offset -gt $max ]]; then
-			read -n 1 -r -s -p  "Are you sure your arm is that long?? (y/n) " long_arm
+			read -p "Are you sure your arm is that long?? (y/n) " long_arm
 			if [[ $long_arm == "y" ]]; then validinput=1; else echo ""; fi	
 		elif [[ $offset =~ ^[0-9]{1,3}$ ]]; then validinput=1
 		else

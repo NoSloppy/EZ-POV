@@ -172,7 +172,7 @@ if [ $height_only != 1 ]; then
 	while [[ "$validinput" != 1 ]] && [[ $preset == 0 ]]
 	do
 		echo "How many "$units" is your arm?"
-		echo "(hand to pivot point: shoulder/elbow/wrist) (Press ENTER for calculated default $offset_default) "
+		echo "(hand to fulcrum: shoulder/elbow/wrist) (Press ENTER for calculated default $offset_default) "
 		read offset
 		if [[ $units == "inches" ]]; then max=30; else max=76; fi
 		if [[ $offset == "" ]]; then  offset=$offset_default validinput=1; echo "Default $offset_default"

@@ -87,24 +87,26 @@ valid_option=0
 
 while [[ "$valid_option" != 1 ]]
 do
-	echo "Please select the settings you want to create the POV image with: "
-	echo "1 - Preset 1 (HEIGHT=144, LENGTH=36, OFFSET=18)"
-	echo "2 - Preset 2 (HEIGHT=97,  LENGTH=63, OFFSET=50)"
-	echo "3 - Preset 3 (HEIGHT=72,  LENGTH=50, OFFSET=15)"
-	echo "4 - Height entry only"
-	echo "5 - Custom options"
-	echo "q - to quit"
-	read -p "" option
+    echo "Please select the settings you want to create the POV image with: "
+    echo "1 - Preset 1 (HEIGHT=144, LENGTH=36, OFFSET=18)"
+    echo "2 - Preset 2 (HEIGHT=97,  LENGTH=63, OFFSET=50)"
+    echo "3 - Preset 3 (HEIGHT=72,  LENGTH=50, OFFSET=15)"
+    echo "4 - Preset 4 (HEIGHT=72,  LENGTH=50, OFFSET=39)"
+    echo "5 - Height entry only"
+    echo "6 - Custom options"
+    echo "q - to quit"
+	read option
 	case $option in
 		"")	echo "! Some option is needed. Please try again"; echo "";;
 		1)	make IMAGE=$image OPTIONS="--height=144 --length=36 --offset=18"; HEIGHT=144 preset=1 valid_option=1;;
 		2)	make IMAGE=$image OPTIONS="--height=97 --length=63 --offset=50"; HEIGHT=97 preset=1 valid_option=1;;
 		3)	make IMAGE=$image OPTIONS="--height=72 --length=50 --offset=15"; HEIGHT=72 preset=1 valid_option=1;;
-		4)	height_only=1; valid_option=1;;
-		5)	valid_option=1;;
-#		6) ------ ADDITIONAL USER PRESETS CAN BE ADDED HERE LIKE THIS-------
-#		7) make IMAGE=$image OPTIONS="--height=H --length=L --offset=O"; HEIGHT=H preset=1 valid_option=1;;
-#		8)		 or move 4 & 5 down to keep them all together
+        4)  make IMAGE=$image OPTIONS="--height=72 --length=50 --offset=39"; HEIGHT=72 preset=1 valid_option=1;;
+        5)  height_only=1; valid_option=1;;
+        6)  valid_option=1;;
+#		7) ------ ADDITIONAL USER PRESETS CAN BE ADDED HERE LIKE THIS-------
+#		8) make IMAGE=$image OPTIONS="--height=H --length=L --offset=O"; HEIGHT=H preset=1 valid_option=1;;
+#		9)		 or move 4 & 5 down to keep them all together
 		*[q*]*)	exit;;
 		*)	echo ""
 			echo "! Not a valid option, Please try again,"
@@ -140,8 +142,8 @@ if [ $height_only != 1 ]; then
         read pref
         case $pref in
             "") echo "! Some option is needed. Please try again"; echo "";;
-            i)  calc_len=$(printf %.0f "$((10**3 * $height * 100 / 144 * 100 / 254))e-3"); offset_default=18; validinput=1; units="inches"; echo "inches";;
-            c)  calc_len=$(printf %.0f "$((10**3 * $height * 100 / 144))e-3"); offset_default=46; validinput=1; units="centimeters"; echo "centimeters";;
+            i)  calc_len=$(printf %.0f "$((10**3 * $height * 100 / 144 * 100 / 254))e-3"); offset_default=18; validinput=1; units="inches"; echo "";;
+            c)  calc_len=$(printf %.0f "$((10**3 * $height * 100 / 144))e-3"); offset_default=46; validinput=1; units="centimeters"; echo "";;
             *[q*]*) exit;;
             *)  echo ""
 				echo "! Not a valid option, Please choose inches or cm,"
@@ -171,8 +173,9 @@ if [ $height_only != 1 ]; then
 	validinput=0
 	while [[ "$validinput" != 1 ]] && [[ $preset == 0 ]]
 	do
-		echo "How many "$units" is your arm?"
-		echo "(hand to fulcrum: shoulder/elbow/wrist) (Press ENTER for calculated default $offset_default) "
+        echo ""
+        echo "How many "$units" is the distance from the bottom of the blade to the fulcrum?"
+        echo "(The fulcrum is usually the swinging joint) (Press ENTER for default $offset_default)"
 		read offset
 		if [[ $units == "inches" ]]; then max=30; else max=76; fi
 		if [[ $offset == "" ]]; then  offset=$offset_default validinput=1; echo "Default $offset_default"

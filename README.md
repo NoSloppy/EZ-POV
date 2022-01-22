@@ -1,7 +1,11 @@
 
 # create_POV_data_files (script)
-Use ProffieOS POV Tools to create Point-Of-View images that show when you swing the blade.  
-Under the hood:  
+Use ProffieOS POV Tools to create Point-Of-View images that show when you swing the blade. 
+This script utilizes the existing Makefile in the pov_tools folder.
+Images can be created without this script via command line by typing 'make'.
+Arguments may be provided as 'OPTIONS=--height=N  --length=N --offset=N'
+
+Under the hood:   
 pnmtorle - Converts a full-color image to hex data to be included in the code.  
 pgmtorle - Converts a single-color image to hex data to be included in the code.  
 pnmwindshieldwiper - Scales the image and bends it so that it will work on a swinging blade.  
@@ -73,4 +77,5 @@ with the following line added to your config file in the CONFIG_TOP section:
   ```
 
 Swing the blade in a steady movement to see the image in the air. A long-exposure capture showcases the result best.  
-Enjoy!  (⌐■_■)
+Enjoy!  (⌐■_■) NoSloppy
+-- credits: Thanks profezzorn for overseeing/providing options, kaQnub for Windows testing/contributions.
